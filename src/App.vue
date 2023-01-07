@@ -1,9 +1,20 @@
 <script setup>
+  import { ref, reactive } from 'vue'
   import Header from './components/Header.vue'
   
+  const cantidad = ref(0);
+  const state = reactive({
+    cantidad:0
+  })
+
   function handleChange(e){
-    console.log(e.target.value);
+    cantidad.value = +e.target.value;
   }
+
+  console.log(cantidad.value);
+
+  console.log(state.cantidad);
+
 </script>
 
 <template>
@@ -16,6 +27,8 @@
         class="w-full bg-gray-200 accent-lime-500 hover:accent-lime-600"
         @input="handleChange"
       />
+
+      {{ cantidad }}
     </div>
   </div>
 </template>
