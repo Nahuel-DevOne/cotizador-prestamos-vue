@@ -1,11 +1,20 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import Header from './components/Header.vue'
   
   const cantidad = ref(10000);
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100;
+
+  const formatearDinero = computed(() => {
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+
+    return formatter.format(cantidad.value);
+  });
 
 </script>
 
@@ -23,7 +32,7 @@
         v-model.number="cantidad"
       />
       <!-- La opción más sencilla -->
-      <p>$ {{ cantidad }}</p>
+      <p class="text-center my-10 text-5xl font-extrabold text-indigo-600">{{ formatearDinero }}</p>
       <!-- Otra opción, pero más rebuscada -->
       <!-- <p v-text="`$ ${cantidad}`"></p> -->
     </div>
