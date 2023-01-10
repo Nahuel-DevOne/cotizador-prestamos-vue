@@ -4,6 +4,7 @@
   import Button from './components/Button.vue';
   
   const cantidad = ref(10000);
+  const meses = ref(6);
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100;
@@ -44,11 +45,11 @@
     <div class="flex justify-between mt-10">
       <Button 
         :operador="'-'"
-        :fn="handleChangeDecrement"
+        @fn="handleChangeDecrement"
       />
       <Button 
         :operador="'+'"
-        :fn="handleChangeIncrement"
+        @fn="handleChangeIncrement"
       />
     </div>
 
@@ -62,9 +63,23 @@
         v-model.number="cantidad"
       />
       <!-- La opción más sencilla -->
-      <p class="text-center my-10 text-5xl font-extrabold text-indigo-600">{{ formatearDinero }}</p>
+      <p class="text-center my-10 text-5xl font-extrabold text-indigo-600">{{ formatearDinero }}
+      </p>
       <!-- Otra opción, pero más rebuscada -->
       <!-- <p v-text="`$ ${cantidad}`"></p> -->
+      <h2 class="text-2xl font-extrabold text-gray-500 text-center">
+        elige un <span class="text-indigo-600">Plazo </span>a pagar
+      </h2>
+
+      <select
+        class="w-full p-2 bg-white border border-gray-300 rounded-lg text-center text-xl font-bold text-gray-500 mt-5"
+        :value="meses"
+        v-model.number="meses"
+      >
+        <option value="6">6 Meses</option>
+        <option value="12">12 Meses</option>
+        <option value="24">24 Meses</option>
+      </select>
     </div>
   </div>
 </template>
