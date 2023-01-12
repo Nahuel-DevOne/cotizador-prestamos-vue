@@ -2,21 +2,23 @@
   import { ref, computed } from 'vue'
   import Header from './components/Header.vue'
   import Button from './components/Button.vue';
+  import { calcularTotaPagar } from './helpers'
   
   const cantidad = ref(10000);
   const meses = ref(6);
+  const total = ref(calcularTotaPagar(cantidad.value, meses.value));
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100;
 
-  const formatearDinero = computed(() => {
+  const formatearDinero = (valor) => {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     });
 
-    return formatter.format(cantidad.value);
-  });
+    return formatter.format(valor);
+  };
 
   const handleChangeDecrement = () => {
     const VALOR = cantidad.value - STEP
@@ -63,7 +65,7 @@
         v-model.number="cantidad"
       />
       <!-- La opción más sencilla -->
-      <p class="text-center my-10 text-5xl font-extrabold text-indigo-600">{{ formatearDinero }}
+      <p class="text-center my-10 text-5xl font-extrabold text-indigo-600">{{ formatearDinero(cantidad) }}
       </p>
       <!-- Otra opción, pero más rebuscada -->
       <!-- <p v-text="`$ ${cantidad}`"></p> -->
@@ -88,7 +90,7 @@
       </h2>
 
       <p class="text-xl text-gray-500 text-center font-bold"> {{ meses }} Meses</p>
-      <p class="text-xl text-gray-500 text-center font-bold">Total a pagar: </p>
+      <p class="text-xl text-gray-500 text-center font-bold">Total a pagar: {{ formatearDinero(total) }} </p>
       <p class="text-xl text-gray-500 text-center font-bold">Mensuales</p>
 
     </div>
