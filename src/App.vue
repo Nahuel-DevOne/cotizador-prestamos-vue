@@ -1,12 +1,12 @@
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, watch } from 'vue'
   import Header from './components/Header.vue'
   import Button from './components/Button.vue';
   import { calcularTotaPagar } from './helpers'
   
   const cantidad = ref(10000);
   const meses = ref(6);
-  const total = ref(calcularTotaPagar(cantidad.value, meses.value));
+  const total = ref(0);
   const MIN = 0;
   const MAX = 20000;
   const STEP = 100;
@@ -19,6 +19,10 @@
 
     return formatter.format(valor);
   };
+
+  watch([cantidad, meses], () => {
+    total.value = calcularTotaPagar(cantidad.value, meses.value);
+  });
 
   const handleChangeDecrement = () => {
     const VALOR = cantidad.value - STEP
@@ -84,7 +88,7 @@
       </select>
     </div>
 
-    <div class="my-5 space-y-3 bg-gray-100 rounded p-5">
+    <div v-if="total > 0" class="my-5 space-y-3 bg-gray-100 rounded p-5">
       <h2 class="text-2xl font-extrabold text-gray-500 text-center">
         Resumen <span class="text-indigo-600">de pagos</span>
       </h2>
@@ -94,5 +98,8 @@
       <p class="text-xl text-gray-500 text-center font-bold">Mensuales</p>
 
     </div>
+
+    <p v-else class="text-center">Añade una cantidad y un plazo a pagar</p>
+
   </div>
 </template>
